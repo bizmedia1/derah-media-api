@@ -162,7 +162,61 @@ platformSelect.onchange=loadPayment;
 countrySelect.onchange=loadPayment;
 
 loadPayment();
+const saveBtn=document.getElementById("saveBtn");
 
+const saveStatus=document.getElementById("saveStatus");
+
+saveBtn.onclick=async()=>{
+
+saveBtn.disabled=true;
+
+saveBtn.textContent="Saving...";
+
+saveStatus.textContent="";
+
+const response=await fetch("/api/update",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+password:password.value,
+
+platform:platformSelect.value,
+
+country:countrySelect.value,
+
+method:methodInput.value,
+
+logo:logoInput.value,
+
+content:contentInput.value
+
+})
+
+});
+
+const result=await response.json();
+
+if(result.success){
+
+saveStatus.textContent="Saved Successfully ✅";
+
+}else{
+
+saveStatus.textContent=result.message||"Failed";
+
+}
+
+saveBtn.disabled=false;
+
+saveBtn.textContent="Save Changes";
+
+};
 }else{
 
 status.textContent="Incorrect password.";
