@@ -1,3 +1,5 @@
+import fs from "fs";
+import path from "path";
 export default function handler(req,res){
 
 res.setHeader("Access-Control-Allow-Origin","*");
@@ -24,7 +26,21 @@ message:"Method Not Allowed"
 
 }
 
-const {password}=req.body;
+const{
+
+password,
+
+platform,
+
+country,
+
+method,
+
+logo,
+
+content
+
+}=req.body;
 
 if(password!==process.env.DERAH_ADMIN_PASSWORD){
 
@@ -38,11 +54,51 @@ message:"Unauthorized"
 
 }
 
+const filePath=path.join(
+
+process.cwd(),
+
+"data",
+
+"payment-data.json"
+
+);
+
+const database=JSON.parse(
+
+fs.readFileSync(filePath,"utf8")
+
+);
+
+if(!database[platform]){
+
+database[platform]={};
+
+}
+
+database[platform][country]={
+
+method,
+
+logo,
+
+content
+
+};
+
+fs.writeFileSync(
+
+filePath,
+
+JSON.stringify(database,null,2)
+
+);
+
 return res.status(200).json({
 
 success:true,
 
-message:"Admin Verified"
+message:"Payment Updated"
 
 });
 
