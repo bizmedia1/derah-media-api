@@ -193,6 +193,11 @@ platformSelect.onchange=loadPayment;
 countrySelect.onchange=loadPayment;
 
 const saveBtn=document.getElementById("saveBtn");
+  const addPlatformBtn=document.getElementById("addPlatformBtn");
+
+const newPlatform=document.getElementById("newPlatform");
+
+const platformStatus=document.getElementById("platformStatus");
 
 const saveStatus=document.getElementById("saveStatus");
 
@@ -247,6 +252,69 @@ saveBtn.disabled=false;
 saveBtn.textContent="Save Changes";
 
 };
+addPlatformBtn.onclick=async()=>{
+
+const name=newPlatform.value.trim();
+
+if(!name){
+
+platformStatus.textContent="Enter a platform name.";
+
+return;
+
+}
+
+addPlatformBtn.disabled=true;
+
+addPlatformBtn.textContent="Adding...";
+
+platformStatus.textContent="";
+
+const response=await fetch("/api/update",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+password:password.value,
+
+action:"add-platform",
+
+newPlatform:name
+
+})
+
+});
+
+const result=await response.json();
+
+if(result.success){
+
+platformStatus.textContent="Platform Added ✅";
+
+newPlatform.value="";
+
+await loadPlatforms();
+
+platformSelect.value=name;
+
+loadPayment();
+
+}else{
+
+platformStatus.textContent=result.message||"Failed";
+
+}
+
+addPlatformBtn.disabled=false;
+
+addPlatformBtn.textContent="Add Platform";
+
+};  
 }else{
 
 status.textContent="Incorrect password.";
