@@ -138,3 +138,47 @@ loginBtn.disabled=false;
 loginBtn.textContent="Login";
 
 };
+const platformSelect=document.getElementById("platform");
+
+const countrySelect=document.getElementById("country");
+
+const methodInput=document.getElementById("method");
+
+const logoInput=document.getElementById("logo");
+
+const contentInput=document.getElementById("content");
+
+async function loadPayment(){
+
+const response=await fetch(
+
+`/api/payment?platform=${encodeURIComponent(platformSelect.value)}&country=${encodeURIComponent(countrySelect.value)}`
+
+);
+
+const result=await response.json();
+
+if(!result.success){
+
+methodInput.value="";
+
+logoInput.value="";
+
+contentInput.value="";
+
+return;
+
+}
+
+methodInput.value=result.method||"";
+
+logoInput.value=result.logo||"";
+
+contentInput.value=result.content||"";
+
+}
+platformSelect.onchange=loadPayment;
+
+countrySelect.onchange=loadPayment;
+
+loadPayment();
