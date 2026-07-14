@@ -21,9 +21,7 @@ platform,
 country,
 method,
 logo,
-content
-}=req.body;
-  const{
+content,
 newPlatform,
 action
 }=req.body;
@@ -40,8 +38,11 @@ const repo=process.env.GITHUB_REPO;
 const token=process.env.GITHUB_TOKEN;
 
 const paymentFilePath="data/payment-data.json";
-
 const platformFilePath="data/platforms.json";
+
+/* ==========================
+LOAD payment-data.json
+========================== */
 
 const paymentFile=await fetch(
 `https://api.github.com/repos/${owner}/${repo}/contents/${paymentFilePath}`,
@@ -60,6 +61,10 @@ Buffer
 .toString("utf8")
 );
 
+/* ==========================
+LOAD platforms.json
+========================== */
+
 const platformFile=await fetch(
 `https://api.github.com/repos/${owner}/${repo}/contents/${platformFilePath}`,
 {
@@ -77,87 +82,58 @@ Buffer
 .toString("utf8")
 );
 
+/* ==========================
+ACTIONS
+========================== */
+
 if(action==="add-platform"){
 
 if(!database[newPlatform]){
-
 database[newPlatform]={};
-
 }
 
 if(!platforms[newPlatform]){
-
 platforms[newPlatform]={
-
 logo:"IMAGE_URL"
-
 };
-
 }
 
 }else if(action==="delete-platform"){
 
 if(!database[platform]){
-
 return res.status(404).json({
 success:false,
 message:"Platform not found."
 });
-
 }
 
 if(Object.keys(database[platform]).length){
-
 return res.status(400).json({
 success:false,
 message:"Delete all countries under this platform first."
 });
-
 }
 
 delete database[platform];
-
 delete platforms[platform];
 
 }else{
 
 if(!database[platform]){
-
 database[platform]={};
-
 }
 
 database[platform][country]={
-
 method,
 logo,
 content
-
 };
 
 }
 
-if(!database[platform]){
-
-database[platform]={};
-
-}
-
-database[platform][country]={
-
-method,
-logo,
-content
-
-};
-
-}
-
-const updatedContent=JSON.stringify(
-database,
-null,
-2
-);
+/* ==========================
+SAVE payment-data.json
+========================== */
 
 const updatedPaymentContent=JSON.stringify(
 database,
@@ -165,13 +141,6 @@ null,
 2
 );
 
-const updatedPlatformContent=JSON.stringify(
-platforms,
-null,
-2
-);
-
-// Save payment-data.json
 await fetch(
 `https://api.github.com/repos/${owner}/${repo}/contents/${paymentFilePath}`,
 {
@@ -190,7 +159,16 @@ sha:paymentData.sha
 }
 );
 
-// Save platforms.json
+/* ==========================
+SAVE platforms.json
+========================== */
+
+const updatedPlatformContent=JSON.stringify(
+platforms,
+null,
+2
+);
+
 const updateResponse=await fetch(
 `https://api.github.com/repos/${owner}/${repo}/contents/${platformFilePath}`,
 {
