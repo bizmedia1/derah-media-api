@@ -62,14 +62,6 @@ dashboard.innerHTML=`
 
 <select id="platform">
 
-<option>Nextel</option>
-<option>Velora</option>
-<option>Incossify</option>
-<option>Vireon</option>
-<option>Optinex</option>
-<option>Aurion</option>
-<option>Glamour</option>
-
 </select>
 
 <label>Country</label>
