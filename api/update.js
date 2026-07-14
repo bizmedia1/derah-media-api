@@ -66,7 +66,26 @@ database[newPlatform]={};
 
 }
 
+
 }else if(action==="delete-platform"){
+
+if(!database[platform]){
+
+return res.status(404).json({
+success:false,
+message:"Platform not found."
+});
+
+}
+
+if(Object.keys(database[platform]).length){
+
+return res.status(400).json({
+success:false,
+message:"Delete all countries under this platform first."
+});
+
+}
 
 delete database[platform];
 
