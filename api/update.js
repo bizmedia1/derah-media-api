@@ -27,10 +27,12 @@ action
 }=req.body;
 
 if(password!==process.env.DERAH_ADMIN_PASSWORD){
+
 return res.status(401).json({
 success:false,
 message:"Unauthorized"
 });
+
 }
 
 const owner=process.env.GITHUB_OWNER;
@@ -93,16 +95,14 @@ database[newPlatform]={};
 }
 
 if(!platforms[newPlatform]){
-
 platforms[newPlatform]={
-
 logo:logo||"IMAGE_URL"
-
 };
+}
 
 }
 
-}else if(action==="delete-platform"){
+else if(action==="delete-platform"){
 
 if(!database[platform]){
 return res.status(404).json({
@@ -111,7 +111,7 @@ message:"Platform not found."
 });
 }
 
-if(Object.keys(database[platform]).length){
+if(Object.keys(database[platform]).length>0){
 return res.status(400).json({
 success:false,
 message:"Delete all countries under this platform first."
@@ -121,7 +121,9 @@ message:"Delete all countries under this platform first."
 delete database[platform];
 delete platforms[platform];
 
-}else if(action==="delete-country"){
+}
+
+else if(action==="delete-country"){
 
 if(!database[platform]){
 return res.status(404).json({
@@ -139,51 +141,38 @@ message:"Country not found."
 
 delete database[platform][country];
 
-}else{
+}
+
+else{
 
 if(!database[platform]){
 database[platform]={};
 }
 
 database[platform][country]={
+
 method,
 logo,
 content
+
 };
 
 if(platforms[platform]){
 platforms[platform].logo=logo;
 }
 
-}
-
-if(!database[platform]){
-database[platform]={};
-}
-
-database[platform][country]={
-method,
-logo,
-content
-};
-if(platforms[platform]){
-
-platforms[platform].logo=logo;
-
-}
 }
 
 /* ==========================
 SAVE payment-data.json
 ========================== */
-
-const updatedPaymentContent=JSON.stringify(
+ const updatedPaymentContent=JSON.stringify(
 database,
 null,
 2
 );
 
-await fetch(
+const paymentUpdate=await fetch(
 `https://api.github.com/repos/${owner}/${repo}/contents/${paymentFilePath}`,
 {
 method:"PUT",
@@ -201,6 +190,18 @@ sha:paymentData.sha
 }
 );
 
+const paymentResult=await paymentUpdate.json();
+
+if(!paymentResult.commit){
+
+return res.status(500).json({
+success:false,
+message:"Failed to update payment-data.json",
+result:paymentResult
+});
+
+}
+
 /* ==========================
 SAVE platforms.json
 ========================== */
@@ -211,7 +212,7 @@ null,
 2
 );
 
-const updateResponse=await fetch(
+const platformUpdate=await fetch(
 `https://api.github.com/repos/${owner}/${repo}/contents/${platformFilePath}`,
 {
 method:"PUT",
@@ -229,21 +230,23 @@ sha:platformData.sha
 }
 );
 
-const result=await updateResponse.json();
+const platformResult=await platformUpdate.json();
 
-if(result.commit){
-
-return res.status(200).json({
-success:true,
-message:"Saved Successfully"
-});
-
-}
+if(!platformResult.commit){
 
 return res.status(500).json({
 success:false,
-message:"GitHub Update Failed",
-result
+message:"Failed to update platforms.json",
+result:platformResult
 });
 
 }
+
+return res.status(200).json({
+
+success:true,
+message:"Saved Successfully"
+
+});
+
+  } 
