@@ -296,7 +296,9 @@ password:password.value,
 
 action:"add-platform",
 
-newPlatform:name
+newPlatform:name,
+
+logo:logoInput.value
 
 })
 
