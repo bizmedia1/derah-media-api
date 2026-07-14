@@ -116,6 +116,18 @@ Add Platform
 
 </button>
 
+<button
+id="deletePlatformBtn"
+style="
+margin-top:12px;
+background:#D63A3A;
+color:#fff;
+">
+
+Delete Selected Platform
+
+</button>
+
 <div id="platformStatus"></div>
 <div id="saveStatus"></div>
 
@@ -198,7 +210,7 @@ const saveBtn=document.getElementById("saveBtn");
 const newPlatform=document.getElementById("newPlatform");
 
 const platformStatus=document.getElementById("platformStatus");
-
+const deletePlatformBtn=document.getElementById("deletePlatformBtn");
 const saveStatus=document.getElementById("saveStatus");
 
 saveBtn.onclick=async()=>{
@@ -313,6 +325,61 @@ platformStatus.textContent=result.message||"Failed";
 addPlatformBtn.disabled=false;
 
 addPlatformBtn.textContent="Add Platform";
+
+}; 
+deletePlatformBtn.onclick=async()=>{
+
+const name=platformSelect.value;
+
+if(!confirm(`Delete "${name}"?`)){
+return;
+}
+
+deletePlatformBtn.disabled=true;
+
+deletePlatformBtn.textContent="Deleting...";
+
+platformStatus.textContent="";
+
+const response=await fetch("/api/update",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+password:password.value,
+
+action:"delete-platform",
+
+platform:name
+
+})
+
+});
+
+const result=await response.json();
+
+if(result.success){
+
+platformStatus.textContent="Platform Deleted ✅";
+
+await loadPlatforms();
+
+loadPayment();
+
+}else{
+
+platformStatus.textContent=result.message||"Failed";
+
+}
+
+deletePlatformBtn.disabled=false;
+
+deletePlatformBtn.textContent="Delete Selected Platform";
 
 };  
 }else{
