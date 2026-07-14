@@ -148,9 +148,9 @@ result.platforms.forEach(platform=>{
 
 const option=document.createElement("option");
 
-option.value=platform;
+option.value=platform.name;
 
-option.textContent=platform;
+option.textContent=platform.name;
 
 platformSelect.appendChild(option);
 
