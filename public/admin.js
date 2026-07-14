@@ -136,13 +136,7 @@ Add Platform
 
 </button>
 
-<button
-id="deletePlatformBtn"
-style="
-margin-top:12px;
-background:#D63A3A;
-color:#fff;
-">
+<button id="deletePlatformBtn">
 
 Delete Selected Platform
 
