@@ -33,15 +33,11 @@ const response=await fetch("/api/update",{
 method:"POST",
 
 headers:{
-
 "Content-Type":"application/json"
-
 },
 
 body:JSON.stringify({
-
 password:value
-
 })
 
 });
@@ -121,23 +117,6 @@ Save Changes
 
 `;
 
-}else{
-
-status.textContent="Incorrect password.";
-
-}
-
-}catch{
-
-status.textContent="Unable to connect.";
-
-}
-
-loginBtn.disabled=false;
-
-loginBtn.textContent="Login";
-
-};
 const platformSelect=document.getElementById("platform");
 
 const countrySelect=document.getElementById("country");
@@ -177,8 +156,27 @@ logoInput.value=result.logo||"";
 contentInput.value=result.content||"";
 
 }
+
 platformSelect.onchange=loadPayment;
 
 countrySelect.onchange=loadPayment;
 
 loadPayment();
+
+}else{
+
+status.textContent="Incorrect password.";
+
+}
+
+}catch{
+
+status.textContent="Unable to connect.";
+
+}
+
+loginBtn.disabled=false;
+
+loginBtn.textContent="Login";
+
+};
