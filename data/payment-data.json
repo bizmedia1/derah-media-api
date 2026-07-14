@@ -3,7 +3,7 @@
     "Benin": {
       "method": "MTN Mobile Money TEST",
       "logo": "https://i.postimg.cc/J0K1McFq/logo-no-text.png",
-      "content": "Welcome to Gboard clipboard, any text you copy will be saved here.\nTouch and hold a clip to pin it. Unpinned clips will be deleted after 1 hour."
+      "content": ".dmDashboardCard{\n\nbackground:#171E2A;\n\nborder:1px solid rgba(255,255,255,.06);\n\nborder-radius:28px;\n\npadding:34px;\n\nbox-shadow:0 20px 60px rgba(0,0,0,.35);\n\n}\n\n.dmDashboardHeader{\n\ndisplay:flex;\n\nalign-items:center;\n\ngap:18px;\n\nmargin-bottom:34px;\n\npadding-bottom:24px;\n\nborder-bottom:1px solid rgba(255,255,255,.08);\n\n}\n\n.dmDashboardIcon{\n\nwidth:72px;\n\nheight:72px;\n\nborder-radius:22px;\n\nbackground:linear-gradient(\n135deg,\n#256DFF,\n#00C2FF\n);\n\ndisplay:flex;\n\nalign-items:center;\n\njustify-content:center;\n\nfont-size:34px;\n\nflex-shrink:0;\n\n}\n\n.dmDashboardHeader h1{\n\nfont-size:34px;\n\nfont-weight:800;\n\nletter-spacing:-.04em;\n\nmargin:0;\n\n}\n\n.dmDashboardHeader p{\n\nmargin-top:6px;\n\ncolor:#8FA3C5;\n\n}\n\n.dmSection h3{\n\nfont-size:22px;\n\nfont-weight:800;\n\nmargin-bottom:24px;\n\n}"
     }
   },
   "Velora": {
