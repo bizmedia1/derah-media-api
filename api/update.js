@@ -52,11 +52,13 @@ message:"Unauthorized"
 });
 
 }
-return res.status(200).json({
+const filePath=path.join(
+process.cwd(),
+"data",
+"payment-data.json"
+);
 
-success:true,
+const raw=fs.readFileSync(filePath,"utf8");
 
-message:"Admin Verified"
-
-});
+const database=JSON.parse(raw);
 }
