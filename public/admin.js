@@ -28,7 +28,7 @@ status.textContent="";
 
 try{
 
-const response=await fetch("/api/update",{
+const response=await fetch("/api/login",{
 
 method:"POST",
 
