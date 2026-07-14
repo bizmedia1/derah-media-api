@@ -54,9 +54,29 @@ dashboard.innerHTML=`
 
 <div class="dmDashboard">
 
+<div class="dmDashboardCard">
+
+<div class="dmDashboardHeader">
+
+<div class="dmDashboardIcon">
+
+🔐
+
+</div>
+
+<div>
+
 <h1>Derah Admin</h1>
 
-<p>Payment Management</p>
+<p>Payment Management System</p>
+
+</div>
+
+</div>
+
+<div class="dmSection">
+
+<h3>Payment Details</h3>
 
 <label>Platform</label>
 
@@ -130,6 +150,10 @@ Delete Selected Platform
 
 <div id="platformStatus"></div>
 <div id="saveStatus"></div>
+
+</div>
+
+</div>
 
 </div>
 
