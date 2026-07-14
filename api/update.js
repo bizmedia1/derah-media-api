@@ -121,7 +121,41 @@ message:"Delete all countries under this platform first."
 delete database[platform];
 delete platforms[platform];
 
+}else if(action==="delete-country"){
+
+if(!database[platform]){
+return res.status(404).json({
+success:false,
+message:"Platform not found."
+});
+}
+
+if(!database[platform][country]){
+return res.status(404).json({
+success:false,
+message:"Country not found."
+});
+}
+
+delete database[platform][country];
+
 }else{
+
+if(!database[platform]){
+database[platform]={};
+}
+
+database[platform][country]={
+method,
+logo,
+content
+};
+
+if(platforms[platform]){
+platforms[platform].logo=logo;
+}
+
+}
 
 if(!database[platform]){
 database[platform]={};
