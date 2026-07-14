@@ -1,1 +1,23 @@
-
+{
+  "Nextel": {
+    "logo": "IMAGE_URL"
+  },
+  "Velora": {
+    "logo": "IMAGE_URL"
+  },
+  "Incossify": {
+    "logo": "IMAGE_URL"
+  },
+  "Vireon": {
+    "logo": "IMAGE_URL"
+  },
+  "Optinex": {
+    "logo": "IMAGE_URL"
+  },
+  "Aurion": {
+    "logo": "IMAGE_URL"
+  },
+  "Glamour": {
+    "logo": "IMAGE_URL"
+  }
+}
