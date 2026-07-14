@@ -60,7 +60,7 @@ dashboard.innerHTML=`
 
 <div class="dmDashboardIcon">
 
-🔐
+
 
 </div>
 
@@ -98,7 +98,17 @@ dashboard.innerHTML=`
 <option>Tanzania</option>
 
 </select>
+<button
+id="deleteCountryBtn"
+style="
+margin-top:12px;
+background:#F59E0B;
+color:#fff;
+">
 
+Delete Selected Country
+
+</button>
 <label>Payment Method</label>
 
 <input
@@ -229,6 +239,7 @@ const newPlatform=document.getElementById("newPlatform");
 
 const platformStatus=document.getElementById("platformStatus");
 const deletePlatformBtn=document.getElementById("deletePlatformBtn");
+const deleteCountryBtn=document.getElementById("deleteCountryBtn");  
 const saveStatus=document.getElementById("saveStatus");
 
 saveBtn.onclick=async()=>{
@@ -345,6 +356,63 @@ platformStatus.textContent=result.message||"Failed";
 addPlatformBtn.disabled=false;
 
 addPlatformBtn.textContent="Add Platform";
+deleteCountryBtn.onclick=async()=>{
+
+const platform=platformSelect.value;
+
+const country=countrySelect.value;
+
+if(!confirm(`Delete "${country}" under "${platform}"?`)){
+return;
+}
+
+deleteCountryBtn.disabled=true;
+
+deleteCountryBtn.textContent="Deleting...";
+
+platformStatus.textContent="";
+
+const response=await fetch("/api/update",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+password:password.value,
+
+action:"delete-country",
+
+platform,
+
+country
+
+})
+
+});
+
+const result=await response.json();
+
+if(result.success){
+
+platformStatus.textContent="Country Deleted ✅";
+
+loadPayment();
+
+}else{
+
+platformStatus.textContent=result.message||"Failed";
+
+}
+
+deleteCountryBtn.disabled=false;
+
+deleteCountryBtn.textContent="Delete Selected Country";
+
+};  
 
 }; 
 deletePlatformBtn.onclick=async()=>{
