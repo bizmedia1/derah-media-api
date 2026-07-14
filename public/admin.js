@@ -102,7 +102,21 @@ placeholder="Payment instructions..."></textarea>
 Save Changes
 
 </button>
+<hr style="margin:30px 0;border:none;border-top:1px solid rgba(255,255,255,.08);">
 
+<label>New Platform</label>
+
+<input
+id="newPlatform"
+placeholder="e.g. NovaPay">
+
+<button id="addPlatformBtn">
+
+Add Platform
+
+</button>
+
+<div id="platformStatus"></div>
 <div id="saveStatus"></div>
 
 </div>
