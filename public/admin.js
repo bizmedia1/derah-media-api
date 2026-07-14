@@ -110,6 +110,31 @@ Save Changes
 `;
 
 const platformSelect=document.getElementById("platform");
+  async function loadPlatforms(){
+
+const response=await fetch("/api/platforms");
+
+const result=await response.json();
+
+platformSelect.innerHTML="";
+
+result.platforms.forEach(platform=>{
+
+const option=document.createElement("option");
+
+option.value=platform;
+
+option.textContent=platform;
+
+platformSelect.appendChild(option);
+
+});
+
+loadPayment();
+
+}
+
+loadPlatforms();
 
 const countrySelect=document.getElementById("country");
 
@@ -153,7 +178,6 @@ platformSelect.onchange=loadPayment;
 
 countrySelect.onchange=loadPayment;
 
-loadPayment();
 const saveBtn=document.getElementById("saveBtn");
 
 const saveStatus=document.getElementById("saveStatus");
