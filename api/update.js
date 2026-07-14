@@ -23,6 +23,10 @@ method,
 logo,
 content
 }=req.body;
+  const{
+newPlatform,
+action
+}=req.body;
 
 if(password!==process.env.DERAH_ADMIN_PASSWORD){
 return res.status(401).json({
@@ -54,15 +58,35 @@ Buffer
 .toString("utf8")
 );
 
+if(action==="add-platform"){
+
+if(!database[newPlatform]){
+
+database[newPlatform]={};
+
+}
+
+}else if(action==="delete-platform"){
+
+delete database[platform];
+
+}else{
+
 if(!database[platform]){
+
 database[platform]={};
+
 }
 
 database[platform][country]={
+
 method,
 logo,
 content
+
 };
+
+}
 
 const updatedContent=JSON.stringify(
 database,
