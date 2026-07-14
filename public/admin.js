@@ -56,17 +56,68 @@ dashboard.style.display="block";
 
 dashboard.innerHTML=`
 
-<h1 style="text-align:center;margin-top:80px;font-size:34px;">
+<div class="dmDashboard">
 
-Welcome 👋
+<h1>Derah Admin</h1>
 
-</h1>
+<p>Payment Management</p>
 
-<p style="text-align:center;margin-top:16px;color:#9FB3D8;">
+<label>Platform</label>
 
-Derah Admin Dashboard
+<select id="platform">
 
-</p>
+<option>Nexttel</option>
+<option>Velora</option>
+<option>Incossify</option>
+<option>Vireon</option>
+<option>Optinex</option>
+<option>Aurion</option>
+<option>Glamour</option>
+
+</select>
+
+<label>Country</label>
+
+<select id="country">
+
+<option>Benin</option>
+<option>Ghana</option>
+<option>Nigeria</option>
+<option>Cameroon</option>
+<option>Kenya</option>
+<option>Uganda</option>
+<option>Rwanda</option>
+<option>Tanzania</option>
+
+</select>
+
+<label>Payment Method</label>
+
+<input
+id="method"
+placeholder="MTN Mobile Money">
+
+<label>Logo URL</label>
+
+<input
+id="logo"
+placeholder="https://...">
+
+<label>Payment Details</label>
+
+<textarea
+id="content"
+placeholder="Payment instructions..."></textarea>
+
+<button id="saveBtn">
+
+Save Changes
+
+</button>
+
+<div id="saveStatus"></div>
+
+</div>
 
 `;
 
