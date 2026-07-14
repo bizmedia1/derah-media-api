@@ -61,4 +61,19 @@ process.cwd(),
 const raw=fs.readFileSync(filePath,"utf8");
 
 const database=JSON.parse(raw);
+  if(!database[platform]){
+
+database[platform]={};
+
+}
+
+database[platform][country]={
+
+method,
+
+logo,
+
+content
+
+};
 }
