@@ -8,18 +8,28 @@ res.setHeader("Access-Control-Allow-Origin","*");
 const filePath=path.join(
 process.cwd(),
 "data",
-"payment-data.json"
+"platforms.json"
 );
 
 const database=JSON.parse(
 fs.readFileSync(filePath,"utf8")
 );
 
+const platforms=Object.entries(database).map(
+([name,data])=>({
+
+name,
+
+logo:data.logo
+
+})
+);
+
 return res.status(200).json({
 
 success:true,
 
-platforms:Object.keys(database)
+platforms
 
 });
 
