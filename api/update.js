@@ -93,9 +93,13 @@ database[newPlatform]={};
 }
 
 if(!platforms[newPlatform]){
+
 platforms[newPlatform]={
-logo:"IMAGE_URL"
+
+logo:logo||"IMAGE_URL"
+
 };
+
 }
 
 }else if(action==="delete-platform"){
@@ -128,7 +132,11 @@ method,
 logo,
 content
 };
+if(platforms[platform]){
 
+platforms[platform].logo=logo;
+
+}
 }
 
 /* ==========================
