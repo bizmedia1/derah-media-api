@@ -39,10 +39,12 @@ const owner=process.env.GITHUB_OWNER;
 const repo=process.env.GITHUB_REPO;
 const token=process.env.GITHUB_TOKEN;
 
-const filePath="data/payment-data.json";
+const paymentFilePath="data/payment-data.json";
 
-const currentFile=await fetch(
-`https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`,
+const platformFilePath="data/platforms.json";
+
+const paymentFile=await fetch(
+`https://api.github.com/repos/${owner}/${repo}/contents/${paymentFilePath}`,
 {
 headers:{
 Authorization:`token ${token}`
@@ -50,11 +52,28 @@ Authorization:`token ${token}`
 }
 );
 
-const currentData=await currentFile.json();
+const paymentData=await paymentFile.json();
 
 const database=JSON.parse(
 Buffer
-.from(currentData.content,"base64")
+.from(paymentData.content,"base64")
+.toString("utf8")
+);
+
+const platformFile=await fetch(
+`https://api.github.com/repos/${owner}/${repo}/contents/${platformFilePath}`,
+{
+headers:{
+Authorization:`token ${token}`
+}
+}
+);
+
+const platformData=await platformFile.json();
+
+const platforms=JSON.parse(
+Buffer
+.from(platformData.content,"base64")
 .toString("utf8")
 );
 
@@ -66,6 +85,15 @@ database[newPlatform]={};
 
 }
 
+if(!platforms[newPlatform]){
+
+platforms[newPlatform]={
+
+logo:"IMAGE_URL"
+
+};
+
+}
 
 }else if(action==="delete-platform"){
 
@@ -89,7 +117,25 @@ message:"Delete all countries under this platform first."
 
 delete database[platform];
 
+delete platforms[platform];
+
 }else{
+
+if(!database[platform]){
+
+database[platform]={};
+
+}
+
+database[platform][country]={
+
+method,
+logo,
+content
+
+};
+
+}
 
 if(!database[platform]){
 
@@ -113,8 +159,21 @@ null,
 2
 );
 
-const updateResponse=await fetch(
-`https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`,
+const updatedPaymentContent=JSON.stringify(
+database,
+null,
+2
+);
+
+const updatedPlatformContent=JSON.stringify(
+platforms,
+null,
+2
+);
+
+// Save payment-data.json
+await fetch(
+`https://api.github.com/repos/${owner}/${repo}/contents/${paymentFilePath}`,
 {
 method:"PUT",
 headers:{
@@ -122,11 +181,30 @@ Authorization:`token ${token}`,
 "Content-Type":"application/json"
 },
 body:JSON.stringify({
-message:`Update ${platform} ${country}`,
+message:"Update payment data",
 content:Buffer
-.from(updatedContent)
+.from(updatedPaymentContent)
 .toString("base64"),
-sha:currentData.sha
+sha:paymentData.sha
+})
+}
+);
+
+// Save platforms.json
+const updateResponse=await fetch(
+`https://api.github.com/repos/${owner}/${repo}/contents/${platformFilePath}`,
+{
+method:"PUT",
+headers:{
+Authorization:`token ${token}`,
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+message:"Update platforms",
+content:Buffer
+.from(updatedPlatformContent)
+.toString("base64"),
+sha:platformData.sha
 })
 }
 );
