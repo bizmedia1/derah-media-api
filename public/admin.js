@@ -62,7 +62,7 @@ dashboard.innerHTML=`
 
 <select id="platform">
 
-<option>Nexttel</option>
+<option>Nextel</option>
 <option>Velora</option>
 <option>Incossify</option>
 <option>Vireon</option>
