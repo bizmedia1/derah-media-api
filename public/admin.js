@@ -94,6 +94,26 @@ dashboard.innerHTML=`
 <option>Uganda</option>
 <option>Rwanda</option>
 <option>Tanzania</option>
+<option>South Africa</option>
+<option>Ivory Coast</option>
+<option>Senegal</option>
+<option>Togo</option>
+<option>Burkina Faso</option>
+<option>Mali</option>
+<option>Guinea</option>
+<option>Liberia</option>
+<option>Sierra Leone</option>
+<option>Gambia</option>
+<option>Ethiopia</option>
+<option>Zambia</option>
+<option>Zimbabwe</option>
+<option>Malawi</option>
+<option>Mozambique</option>
+<option>Botswana</option>
+<option>Namibia</option>
+<option>Angola</option>
+<option>Gabon</option>
+<option>Republic of the Congo</option>
 
 </select>
 
