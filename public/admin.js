@@ -60,8 +60,6 @@ dashboard.innerHTML=`
 
 <div class="dmDashboardIcon">
 
-
-
 </div>
 
 <div>
@@ -98,6 +96,7 @@ dashboard.innerHTML=`
 <option>Tanzania</option>
 
 </select>
+
 <button
 id="deleteCountryBtn"
 style="
@@ -109,6 +108,7 @@ color:#fff;
 Delete Selected Country
 
 </button>
+
 <label>Payment Method</label>
 
 <input
@@ -132,6 +132,7 @@ placeholder="Payment instructions..."></textarea>
 Save Changes
 
 </button>
+
 <hr style="margin:30px 0;border:none;border-top:1px solid rgba(255,255,255,.08);">
 
 <label>New Platform</label>
@@ -153,6 +154,7 @@ Delete Selected Platform
 </button>
 
 <div id="platformStatus"></div>
+
 <div id="saveStatus"></div>
 
 </div>
@@ -164,7 +166,8 @@ Delete Selected Platform
 `;
 
 const platformSelect=document.getElementById("platform");
-  async function loadPlatforms(){
+
+async function loadPlatforms(){
 
 const response=await fetch("/api/platforms");
 
@@ -187,8 +190,6 @@ platformSelect.appendChild(option);
 loadPayment();
 
 }
-
-loadPlatforms();
 
 const countrySelect=document.getElementById("country");
 
@@ -233,14 +234,23 @@ platformSelect.onchange=loadPayment;
 countrySelect.onchange=loadPayment;
 
 const saveBtn=document.getElementById("saveBtn");
-  const addPlatformBtn=document.getElementById("addPlatformBtn");
+
+const addPlatformBtn=document.getElementById("addPlatformBtn");
 
 const newPlatform=document.getElementById("newPlatform");
 
 const platformStatus=document.getElementById("platformStatus");
+
 const deletePlatformBtn=document.getElementById("deletePlatformBtn");
-const deleteCountryBtn=document.getElementById("deleteCountryBtn");  
+
+const deleteCountryBtn=document.getElementById("deleteCountryBtn");
+
 const saveStatus=document.getElementById("saveStatus");
+
+
+/* ==========================
+SAVE PAYMENT
+========================== */
 
 saveBtn.onclick=async()=>{
 
@@ -293,6 +303,12 @@ saveBtn.disabled=false;
 saveBtn.textContent="Save Changes";
 
 };
+
+
+/* ==========================
+ADD PLATFORM
+========================== */
+
 addPlatformBtn.onclick=async()=>{
 
 const name=newPlatform.value.trim();
@@ -356,6 +372,14 @@ platformStatus.textContent=result.message||"Failed";
 addPlatformBtn.disabled=false;
 
 addPlatformBtn.textContent="Add Platform";
+
+};
+
+
+/* ==========================
+DELETE COUNTRY
+========================== */
+
 deleteCountryBtn.onclick=async()=>{
 
 const platform=platformSelect.value;
@@ -363,7 +387,9 @@ const platform=platformSelect.value;
 const country=countrySelect.value;
 
 if(!confirm(`Delete "${country}" under "${platform}"?`)){
+
 return;
+
 }
 
 deleteCountryBtn.disabled=true;
@@ -386,9 +412,9 @@ password:password.value,
 
 action:"delete-country",
 
-platform,
+platform:platform,
 
-country
+country:country
 
 })
 
@@ -400,7 +426,7 @@ if(result.success){
 
 platformStatus.textContent="Country Deleted ✅";
 
-loadPayment();
+await loadPayment();
 
 }else{
 
@@ -412,15 +438,21 @@ deleteCountryBtn.disabled=false;
 
 deleteCountryBtn.textContent="Delete Selected Country";
 
-};  
+};
 
-}; 
+
+/* ==========================
+DELETE PLATFORM
+========================== */
+
 deletePlatformBtn.onclick=async()=>{
 
 const name=platformSelect.value;
 
 if(!confirm(`Delete "${name}"?`)){
+
 return;
+
 }
 
 deletePlatformBtn.disabled=true;
@@ -469,7 +501,15 @@ deletePlatformBtn.disabled=false;
 
 deletePlatformBtn.textContent="Delete Selected Platform";
 
-};  
+};
+
+
+/* ==========================
+INITIAL LOAD
+========================== */
+
+loadPlatforms();
+
 }else{
 
 status.textContent="Incorrect password.";
